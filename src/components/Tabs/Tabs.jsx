@@ -1,4 +1,8 @@
+import classNames from 'classnames';
+
 export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
+  const activeTab = tabs.find(tab => tab.id === activeTabId) || tabs[0];
+
   return (
     <div data-cy="TabsComponent">
       <div className="tabs is-boxed">
@@ -7,14 +11,15 @@ export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
             <li
               key={tab.id}
               data-cy="Tab"
-              className={
-                tab.id === (activeTabId || tabs[0].id) ? 'is-active' : ''
-              }
+              className={classNames({
+                'is-active': activeTab.id === tab.id,
+              })}
             >
               <a
                 href={`#${tab.id}`}
                 data-cy="TabLink"
-                onClick={() => {
+                onClick={e => {
+                  e.preventDefault();
                   if (tab.id !== activeTabId) {
                     onTabSelected(tab.id);
                   }
@@ -28,7 +33,7 @@ export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
       </div>
 
       <div className="block" data-cy="TabContent">
-        {tabs.find(tab => tab.id === activeTabId)?.content}
+        {activeTab.content}
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -15,7 +14,6 @@ export const tabs = [
 
 export const App = () => {
   const [activeTabId, setActiveTabId] = useState(tabs[0].id);
-  const onTabSelected = tabId => setActiveTabId(tabId);
   const activeTab = tabs.find(tab => tab.id === activeTabId) || tabs[0];
 
   return (
@@ -26,7 +24,7 @@ export const App = () => {
         data-cy="TabsComponent"
         tabs={tabs}
         activeTabId={activeTabId}
-        onTabSelected={onTabSelected}
+        onTabSelected={setActiveTabId}
       />
     </div>
   );
